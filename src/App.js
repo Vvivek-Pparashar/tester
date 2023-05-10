@@ -8,7 +8,7 @@ const videoConstraints = {
 };
 const App = () => {
   const [picture, setPicture] = useState("");
-  const [face, setFace] = useState("user")
+  const [face, setFace] = useState("environment")
   const webcamRef = React.useRef(null);
   const capture = React.useCallback(() => {
     const pictureSrc = webcamRef.current.getScreenshot();
