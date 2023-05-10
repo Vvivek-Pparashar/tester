@@ -7,7 +7,7 @@ const App = () => {
   const videoConstraints = {
     width: 1280,
     height: 720,
-    facingMode: "environment",
+    facingMode: face,
   };
   const webcamRef = React.useRef(null);
 
@@ -18,6 +18,7 @@ const App = () => {
         height={720}
         screenshotFormat="image/jpeg"
         width={120}
+        mirrored={face === "user" ? true : false}
         videoConstraints={videoConstraints}
       ></Webcam>
 
