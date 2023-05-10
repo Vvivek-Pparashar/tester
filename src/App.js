@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import Webcam from "react-webcam";
 const WebcamComponent = () => <Webcam />;
-const videoConstraints = {
-  width: 400,
-  height: 400,
-  facingMode: "user",
-};
+
 const App = () => {
   const [picture, setPicture] = useState("");
   const [face, setFace] = useState("environment")
+
+  const videoConstraints = {
+    width: 400,
+    height: 400,
+    facingMode: face,
+  };
+
   const webcamRef = React.useRef(null);
   const capture = React.useCallback(() => {
     const pictureSrc = webcamRef.current.getScreenshot();
@@ -28,7 +31,7 @@ const App = () => {
             width={400}
             screenshotFormat="image/jpeg"
             videoConstraints={videoConstraints}
-            facingMode = {face}
+            // facingMode = {face}
             mirrored={face==="user"?true:false}
           />
         ) : (
