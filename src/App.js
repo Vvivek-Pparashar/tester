@@ -1,30 +1,55 @@
 import React, { useState } from "react";
 import Webcam from "react-webcam";
-
+const WebcamComponent = () => <Webcam />;
+const videoConstraints = {
+  width: 400,
+  height: 400,
+  facingMode: "user",
+};
 const App = () => {
-
-  const [face, setFace] = useState("user");
-  const videoConstraints = {
-    width: 1280,
-    height: 720,
-    facingMode: face,
-  };
+  const [picture, setPicture] = useState("");
+  const [face, setFace] = useState("")
   const webcamRef = React.useRef(null);
-
+  const capture = React.useCallback(() => {
+    const pictureSrc = webcamRef.current.getScreenshot();
+    setPicture(pictureSrc);
+  });
   return (
-    <>
-      <Webcam
-        audio={false}
-        height={720}
-        screenshotFormat="image/jpeg"
-        width={120}
-        mirrored={face === "user" ? true : false}
-        videoConstraints={videoConstraints}
-      ></Webcam>
-
-      <button onClick={()=>setFace(face === "user" ? "environment" : "user")}>Switch</button>
-    </>
+    <div>
+      <h2 className="mb-5 text-center">
+        React Photo Capture using Webcam Examle
+      </h2>
+      <div>
+        {picture == "" ? (
+          <Webcam
+            audio={false}
+            height={400}
+            ref={webcamRef}
+            width={400}
+            screenshotFormat="image/jpeg"
+            videoConstraints={videoConstraints}
+            facingMode = {face}
+            mirrored={face==="user"?true:false}
+          />
+        ) : (
+          <img src={picture} />
+        )}
+      </div>
+      <div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            capture()
+          }}
+        >
+          Capture
+        </button>
+        <button onClick={(e)=>{
+          e.preventDefault();
+          setFace(face === "user" ? "environment" : "user")
+        }}>Switch</button>
+      </div>
+    </div>
   );
 };
-
 export default App;
